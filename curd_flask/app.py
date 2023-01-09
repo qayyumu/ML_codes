@@ -16,7 +16,7 @@ if(1):   ## load the env variables from the .env filepath
    from dotenv import load_dotenv
    load_dotenv('.env')
 
-print("Path to the SQL:", os.getenv("SQL_URI"))
+# print("Path to the SQL:", os.getenv("SQL_URI"))
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("SQL_URI")
 app.secret_key = os.getenv("SECRET_key_for_session")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -44,11 +44,13 @@ def show_all():
 def new():
    if request.method == 'POST':
       if not request.form['name'] or not request.form['city'] or not request.form['addr']:
+         print('Data form not filled')
          flash('Please enter all the fields', 'error')
       else:
          employee = employees(request.form['name'], request.form['city'],request.form['addr'], request.form['pin'])
          db.session.add(employee)
          db.session.commit()
+         print('Record added')
          flash('Record was successfully added')
          return redirect(url_for('show_all'))
    return render_template('new.html')
