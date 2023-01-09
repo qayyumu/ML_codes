@@ -9,10 +9,15 @@ app = Flask(__name__,template_folder='template')  ##folder name
 #Example "        set SQL_URI=postgresql://postgres:Providepassword@localhost:5433/empl  
 ###set SECRET_key_for_session=secretkey
 
-print(os.getenv("SQL_URI"))
-print(os.getenv("SECRET_key_for_session"))
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("SQL_URI")
+# print(os.getenv("SQL_URI"))
+# print(os.getenv("SECRET_key_for_session"))
 
+if(1):   ## load the env variables from the .env filepath
+   from dotenv import load_dotenv
+   load_dotenv('.env')
+
+print("Path to the SQL:", os.getenv("SQL_URI"))
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("SQL_URI")
 app.secret_key = os.getenv("SECRET_key_for_session")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
