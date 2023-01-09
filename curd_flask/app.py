@@ -55,6 +55,31 @@ def new():
          return redirect(url_for('show_all'))
    return render_template('new.html')
 
+@app.route('/deletee', methods = ['GET', 'POST'])
+def deletee():
+   if request.method == 'POST':
+      if not request.form['name']:
+         print('Data form not filled')
+         flash('Please enter all the fields', 'error')
+      else:
+         #### check if the employee exist in the database  --retreive from the database
+         obtain_emp = db.session.query(employees).filter_by(name=request.form['name']).first()
+         if(obtain_emp):
+            print(obtain_emp.name,obtain_emp.id)
+            # employee = employees(request.form['name'], "","","")
+            db.session.delete(obtain_emp)
+            db.session.commit()
+            print('Record deleted')
+            flash('Record was successfully deleted')
+            return redirect(url_for('show_all'))
+         else:
+            print('Record not found')
+            flash('Record was not found')
+            return redirect(url_for('show_all'))
+   return render_template('delete.html')
+
+
+
 if __name__ == '__main__':
    with app.app_context():
         db.create_all()
