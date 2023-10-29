@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang = "en">
+   <head></head>
+   <body>
+      
+      <h3>
+         <a href = "{{ url_for('show_all') }}">Records in Postgres SQL of Employee</a>
+      </h3>
+      
+      <hr/>
+      {%- for message in get_flashed_messages() %}
+         {{ message }}
+      {%- endfor %}
+		
+      <h3>Employee (<a href = "{{ url_for('new') }}">Add Employee
+         </a>)</h3>
+
+      <h3>Employee (<a href = "{{ url_for('deletee') }}">Delete Employee
+         </a>)</h3>
+      
+      <table>
+         <thead>
+            <tr>
+               <th>Name</th>
+               <th>City</th>
+               <th>Address</th>
+               <th>Pin</th>
+            </tr>
+         </thead>
+         
+         <tbody>
+            {% for employee in employees %}
+               <tr>
+                  <td>{{ employee.name }}</td>
+                  <td>{{ employee.city }}</td>
+                  <td>{{ employee.addr }}</td>
+                  <td>{{ employee.pin }}</td>
+               </tr>
+            {% endfor %}
+         </tbody>
+      </table>
+      
+   </body>
+</html>
